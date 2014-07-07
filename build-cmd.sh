@@ -7,7 +7,7 @@ set -x
 # make errors fatal
 set -e
 
-LIJPEG_TURBO_VERSION="1.2.0"
+LIJPEG_TURBO_VERSION="1.3.1"
 LIBJPEG_TURBO_SOURCE_DIR="libjpeg-turbo-$LIJPEG_TURBO_VERSION"
 
 if [ -z "$AUTOBUILD" ] ; then 
@@ -25,9 +25,29 @@ set -x
 
 top="$(pwd)"
 stage="$top/stage"
+stage_include="$stage/include/jpeglib"
+stage_debug="$stage/lib/debug"
+stage_release="$stage/lib/release"
+mkdir -p "$stage_include"
+mkdir -p "$stage_debug"
+mkdir -p "$stage_release"
 pushd "$LIBJPEG_TURBO_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
+		mkdir -p build
+		pushd build
+		
+		cmake -G "Visual Studio 12" ../ -DWITH_JPEG8=ON
+		
+		build_sln "libjpeg-turbo.sln" "Debug|Win32"
+		build_sln "libjpeg-turbo.sln" "Release|Win32"
+		
+		cp -a "jconfig.h" "$stage_include"
+		cp -a "Debug/jpeg-static.lib" "$stage_debug/jpeglib.lib"
+		cp -a "Release/jpeg-static.lib" "$stage_release/jpeglib.lib"
+		popd
+
+		cp -a *.h "$stage_include"
         ;;
         "darwin")
         ;;
