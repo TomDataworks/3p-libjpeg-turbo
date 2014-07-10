@@ -49,6 +49,22 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
 
 		cp -a *.h "$stage_include"
         ;;
+        "windows64")
+		mkdir -p build
+		pushd build
+		
+		cmake -G "Visual Studio 12 Win64" ../ -DWITH_JPEG8=ON
+		
+		build_sln "libjpeg-turbo.sln" "Debug|x64"
+		build_sln "libjpeg-turbo.sln" "Release|x64"
+		
+		cp -a "jconfig.h" "$stage_include"
+		cp -a "Debug/jpeg-static.lib" "$stage_debug/jpeglib.lib"
+		cp -a "Release/jpeg-static.lib" "$stage_release/jpeglib.lib"
+		popd
+
+		cp -a *.h "$stage_include"
+        ;;
         "darwin")
         ;;
         "linux")
