@@ -66,6 +66,14 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
 		cp -a *.h "$stage_include"
         ;;
         "darwin")
+            DEVELOPER=$(xcode-select --print-path)
+            opts="-arch x86_64 -mmacosx-version-min=10.7 -DMAC_OS_X_VERSION_MIN_REQUIRED=1070 -iwithsysroot ${DEVELOPER}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/"
+            CFLAGS="${opts}" CXXFLAGs="${opts}" LDFLAGS="${opts}" \
+               ./configure --prefix="$stage" --includedir="$stage/include/jpeglib" --libdir="$stage/lib/release" --with-jpeg8 \
+               --host x86_64-apple-darwin NASM=/opt/local/bin/nasm
+               #--host i686-apple-darwin CFLAGS='-O3 -m32' LDFLAGS=-m32
+            make
+            make install
         ;;
         "linux")
             JOBS=`cat /proc/cpuinfo | grep processor | wc -l`
