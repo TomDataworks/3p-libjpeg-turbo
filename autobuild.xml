@@ -12,7 +12,7 @@
       <key>license_file</key>
       <string>LICENSES/jpeglib.txt</string>
       <key>name</key>
-      <string>libjpeg-turbo</string>
+      <string>jpeglib</string>
       <key>platforms</key>
       <map>
         <key>common</key>
