@@ -74,6 +74,11 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
                #--host i686-apple-darwin CFLAGS='-O3 -m32' LDFLAGS=-m32
             make
             make install
+
+			pushd "$stage/lib/release"
+                fix_dylib_id "libjpeg.8.0.2.dylib"
+			    fix_dylib_id "libturbojpeg.0.0.0.dylib"
+            popd
         ;;
         "linux")
             JOBS=`cat /proc/cpuinfo | grep processor | wc -l`
