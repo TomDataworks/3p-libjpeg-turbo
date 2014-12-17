@@ -104,19 +104,21 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
 
             # Let's remain compatible with the LL viewer cmake for less merge hell in the future if it ever changes.
             # and until Windows and Darwin builds are worked out for this thing.
-            # Release Build
-            CFLAGS="-m64 -O3" CXXFLAGS="$CFLAGS -std=c++11" LDFLAGS="-m64" ./configure --with-jpeg8 \
-                    --with-pic --prefix="$stage" --includedir="$stage/include/jpeglib" --libdir="$stage/lib/release"
-            make -j$JOBS
-            make install
-
-            make clean
-
             # Debug Build
             CFLAGS="-m64 -Og -g" CXXFLAGS="$CFLAGS -std=c++11" LDFLAGS="-m64" ./configure --with-jpeg8 \
-                    --with-pic --prefix="$stage" --includedir="$stage/include/jpeglib" --libdir="$stage/lib/debug"
+                    --with-pic --prefix="\${AUTOBUILD_PACKAGES_DIR}" --includedir="\${prefix}/include/jpeglib" --libdir="\${prefix}/lib/debug"
             make -j$JOBS
-            make install
+            make install DESTDIR="$stage"
+
+            make distclean
+
+            # Release Build
+            CFLAGS="-m64 -O3" CXXFLAGS="$CFLAGS -std=c++11" LDFLAGS="-m64" ./configure --with-jpeg8 \
+                    --with-pic --prefix="\${AUTOBUILD_PACKAGES_DIR}" --includedir="\${prefix}/include/jpeglib" --libdir="\${prefix}/lib/release"
+            make -j$JOBS
+            make install DESTDIR="$stage"
+
+            make distclean
         ;;
     esac
     mkdir -p "$stage/LICENSES"
