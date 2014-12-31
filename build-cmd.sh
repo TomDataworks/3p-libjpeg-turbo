@@ -31,6 +31,9 @@ stage_release="$stage/lib/release"
 mkdir -p "$stage_include"
 mkdir -p "$stage_debug"
 mkdir -p "$stage_release"
+
+echo "${LIJPEG_TURBO_VERSION}" > "${stage}/VERSION.txt"
+
 pushd "$LIBJPEG_TURBO_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
