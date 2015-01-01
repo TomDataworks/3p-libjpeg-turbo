@@ -70,18 +70,22 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
         ;;
         "darwin")
             DEVELOPER=$(xcode-select --print-path)
-            opts="-arch x86_64 -mmacosx-version-min=10.7 -DMAC_OS_X_VERSION_MIN_REQUIRED=1070 -iwithsysroot ${DEVELOPER}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/"
-            CFLAGS="${opts}" CXXFLAGs="${opts}" LDFLAGS="${opts}" \
-               ./configure --prefix="$stage" --includedir="$stage/include/jpeglib" --libdir="$stage/lib/release" --with-jpeg8 \
-               --host x86_64-apple-darwin NASM=/opt/local/bin/nasm
-               #--host i686-apple-darwin CFLAGS='-O3 -m32' LDFLAGS=-m32
+            opts="-mmacosx-version-min=10.7 -DMAC_OS_X_VERSION_MIN_REQUIRED=1070 -iwithsysroot ${DEVELOPER}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/"
+            CFLAGS="-arch x86_64  ${opts}" CXXFLAGs="-arch x86_64 ${opts}" LDFLAGS="-arch x86_64 ${opts}" \
+                ./configure --prefix="${stage}64" --includedir="${stage}64/include/jpeglib" --libdir="${stage}64/lib/release" --enable-static --disable-shared --with-jpeg8 --host x86_64-apple-darwin NASM=/opt/local/bin/nasm
             make
             make install
+            make clean
 
-			pushd "$stage/lib/release"
-                fix_dylib_id "libjpeg.8.0.2.dylib"
-			    fix_dylib_id "libturbojpeg.0.0.0.dylib"
-            popd
+            CFLAGS="-i386 ${opts}" CXXFLAGs="-i386 ${opts}" LDFLAGS="-i386 ${opts}" \
+                ./configure --prefix="${stage}" --includedir="$stage/include/jpeglib" --libdir="$stage/lib/release" --with-jpeg8 --enable-static --disable-shared --host i686-apple-darwin CFLAGS='-O3 -m32' LDFLAGS=-m32
+            make
+            make install
+            make clean
+
+            for f in "${stage}"/lib/release/*.a ; do
+                lipo -create "$f" "${stage}64"/lib/release/$(basename $f) -output "$f"
+            done
         ;;
         "linux")
             JOBS=`cat /proc/cpuinfo | grep processor | wc -l`
