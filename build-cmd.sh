@@ -7,8 +7,8 @@ set -x
 # make errors fatal
 set -e
 
-LIJPEG_TURBO_VERSION="1.3.1"
-LIBJPEG_TURBO_SOURCE_DIR="libjpeg-turbo-$LIJPEG_TURBO_VERSION"
+LIJPEG_TURBO_VERSION="1.4.0"
+LIBJPEG_TURBO_SOURCE_DIR="libjpeg-turbo"
 
 if [ -z "$AUTOBUILD" ] ; then 
     fail
