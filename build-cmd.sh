@@ -70,7 +70,7 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
         ;;
         "darwin")
             DEVELOPER=$(xcode-select --print-path)
-            opts="-mmacosx-version-min=10.7 -DMAC_OS_X_VERSION_MIN_REQUIRED=1070 -iwithsysroot ${DEVELOPER}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/"
+            opts="-mmacosx-version-min=10.8 -DMAC_OS_X_VERSION_MIN_REQUIRED=1080 -iwithsysroot ${DEVELOPER}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/"
             CFLAGS="-arch x86_64  ${opts}" CXXFLAGs="-arch x86_64 ${opts}" LDFLAGS="-arch x86_64 ${opts}" \
                 ./configure --prefix="${stage}64" --includedir="${stage}64/include/jpeglib" --libdir="${stage}64/lib/release" --enable-static --disable-shared --with-jpeg8 --host x86_64-apple-darwin NASM=/opt/local/bin/nasm
             make
