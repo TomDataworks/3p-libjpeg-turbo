@@ -37,36 +37,36 @@ echo "${LIJPEG_TURBO_VERSION}" > "${stage}/VERSION.txt"
 pushd "$LIBJPEG_TURBO_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
-		mkdir -p build
-		pushd build
-		
-		cmake -G "Visual Studio 14" ../ -DWITH_JPEG8=ON -DWITH_CRT_DLL=ON
-		
-		build_sln "libjpeg-turbo.sln" "Debug" "Win32"
-		build_sln "libjpeg-turbo.sln" "Release" "Win32"
-		
-		cp -a "jconfig.h" "$stage_include"
-		cp -a "Debug/jpeg-static.lib" "$stage_debug/jpeglib.lib"
-		cp -a "Release/jpeg-static.lib" "$stage_release/jpeglib.lib"
-		popd
+            mkdir -p build
+            pushd build
+            
+            cmake -G "Visual Studio 14" ../ -DCMAKE_SYSTEM_VERSION="10.0.10586.0" -DWITH_JPEG8=ON -DWITH_CRT_DLL=ON
+            
+            build_sln "libjpeg-turbo.sln" "Debug" "Win32"
+            build_sln "libjpeg-turbo.sln" "Release" "Win32"
+            
+            cp -a "jconfig.h" "$stage_include"
+            cp -a "Debug/jpeg-static.lib" "$stage_debug/jpeglib.lib"
+            cp -a "Release/jpeg-static.lib" "$stage_release/jpeglib.lib"
+            popd
 
-		cp -a *.h "$stage_include"
+            cp -a *.h "$stage_include"
         ;;
         "windows64")
-		mkdir -p build
-		pushd build
-		
-		cmake -G "Visual Studio 14 Win64" ../ -DWITH_JPEG8=ON  -DWITH_CRT_DLL=ON
-		
-		build_sln "libjpeg-turbo.sln" "Debug" "x64"
-		build_sln "libjpeg-turbo.sln" "Release" "x64"
-		
-		cp -a "jconfig.h" "$stage_include"
-		cp -a "Debug/jpeg-static.lib" "$stage_debug/jpeglib.lib"
-		cp -a "Release/jpeg-static.lib" "$stage_release/jpeglib.lib"
-		popd
+            mkdir -p build
+            pushd build
+            
+            cmake -G "Visual Studio 14 Win64" ../ -DCMAKE_SYSTEM_VERSION="10.0.10586.0" -DWITH_JPEG8=ON  -DWITH_CRT_DLL=ON
+            
+            build_sln "libjpeg-turbo.sln" "Debug" "x64"
+            build_sln "libjpeg-turbo.sln" "Release" "x64"
+            
+            cp -a "jconfig.h" "$stage_include"
+            cp -a "Debug/jpeg-static.lib" "$stage_debug/jpeglib.lib"
+            cp -a "Release/jpeg-static.lib" "$stage_release/jpeglib.lib"
+            popd
 
-		cp -a *.h "$stage_include"
+            cp -a *.h "$stage_include"
         ;;
         "darwin")
             DEVELOPER=$(xcode-select --print-path)
