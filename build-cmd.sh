@@ -89,7 +89,7 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
         ;;
         "linux")
             JOBS=`cat /proc/cpuinfo | grep processor | wc -l`
-            HARDENED="-fstack-protector-strong -D_FORTIFY_SOURCE=2"
+            HARDENED="-fstack-protector -D_FORTIFY_SOURCE=2"
 
             # Let's remain compatible with the LL viewer cmake for less merge hell in the future if it ever changes.
             # and until Windows and Darwin builds are worked out for this thing.
@@ -111,7 +111,7 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
         ;;
         "linux64")
             JOBS=`cat /proc/cpuinfo | grep processor | wc -l`
-            HARDENED="-fstack-protector-strong -D_FORTIFY_SOURCE=2"
+            HARDENED="-fstack-protector -D_FORTIFY_SOURCE=2"
 
             # Let's remain compatible with the LL viewer cmake for less merge hell in the future if it ever changes.
             # and until Windows and Darwin builds are worked out for this thing.
