@@ -29,8 +29,10 @@
 #ifdef _WIN32
 	#ifndef __MINGW32__
 		#include <stdio.h>
-		#define snprintf(str, n, format, ...)  \
-			_snprintf_s(str, n, _TRUNCATE, format, __VA_ARGS__)
+		#if (defined(_MSC_VER) && (_MSC_VER < 1900))
+			#define snprintf(str, n, format, ...)  \
+				_snprintf_s(str, n, _TRUNCATE, format, __VA_ARGS__)
+		#endif
 	#endif
 	#define strcasecmp stricmp
 	#define strncasecmp strnicmp
