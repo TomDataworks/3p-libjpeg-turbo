@@ -133,7 +133,7 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
         ;;
     esac
     mkdir -p "$stage/LICENSES"
-    cp README "$stage/LICENSES/jpeglib.txt"
+    cp LICENSE.md "$stage/LICENSES/jpeglib.txt"
 popd
 
 pass
