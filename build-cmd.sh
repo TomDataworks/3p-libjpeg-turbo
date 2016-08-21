@@ -40,7 +40,7 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
             mkdir -p build
             pushd build
             
-            cmake -G "Visual Studio 14" ../ -DCMAKE_SYSTEM_VERSION="10.0.10586.0" -DWITH_JPEG8=ON -DWITH_CRT_DLL=ON
+            cmake -G "Visual Studio 14" ../ -DCMAKE_SYSTEM_VERSION="10.0.14393.0" -DWITH_JPEG8=ON -DWITH_CRT_DLL=ON
             
             build_sln "libjpeg-turbo.sln" "Debug" "Win32"
             build_sln "libjpeg-turbo.sln" "Release" "Win32"
@@ -56,7 +56,7 @@ pushd "$LIBJPEG_TURBO_SOURCE_DIR"
             mkdir -p build
             pushd build
             
-            cmake -G "Visual Studio 14 Win64" ../ -DCMAKE_SYSTEM_VERSION="10.0.10586.0" -DWITH_JPEG8=ON  -DWITH_CRT_DLL=ON
+            cmake -G "Visual Studio 14 Win64" ../ -DCMAKE_SYSTEM_VERSION="10.0.14393.0" -DWITH_JPEG8=ON  -DWITH_CRT_DLL=ON
             
             build_sln "libjpeg-turbo.sln" "Debug" "x64"
             build_sln "libjpeg-turbo.sln" "Release" "x64"
